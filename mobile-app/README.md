@@ -1,79 +1,32 @@
-# Update the Application to Use Navigation
+# Stack Navigation with Expo Router
 
-Let’s update the application to explore more about **routing in Expo**.
+This guide walks you through setting up **Stack Navigation** using Expo Router’s file-based routing system.
 
 ---
 
-## Setting Up Expo Router (File-Based Routing)
+## 📁 Step 1: Create Route Files
 
-### 1. Install Required Packages
+Set up the following structure inside your `app` directory:
 
-```bash
-npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+```
+app/
+  index.tsx       → Home screen
+  details.tsx     → Details screen
+  _layout.tsx     → Stack layout
 ```
 
-### 2. Update `package.json`
-
-Set the entry point:
-
-```json
-"main": "expo-router/entry"
-```
-
-### 3. Update `app.json`
-
-Add a custom scheme:
-
-```json
-"scheme": "your-app-scheme"
-```
-
-### 4. Install Web Support
-
-```bash
-npx expo install react-native-web react-dom
-```
-
-### 5. Update `app.json` for Web
-
-```json
-"web": {
-  "bundler": "metro"
-}
-```
-
-### 6. Configure Babel
-
-Create `babel.config.js`:
-
-```js
-module.exports = function (api) {
-  api.cache(true);
-  return {
-    presets: ['babel-preset-expo'],
-  };
-};
-```
-
-Install the required Babel packages:
-
-```bash
-npm install -D babel-preset-expo
-```
-
-### 7. Set Up Entry File
-
-* Remove `App.tsx` from the root folder.
-* Create a new `index.tsx` file with the following content:
+### 🏠 `app/index.tsx`
 
 ```tsx
 import { View, Text } from 'react-native';
 import React from 'react';
+import { Link } from 'expo-router';
 
 const Home = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ fontSize: 20 }}>Home</Text>
+      <Text style={{ fontSize: 20, marginTop: 20, marginBottom: 20 }}>Home</Text>
+      <Link href="/details">Go to Details</Link>
     </View>
   );
 };
@@ -81,11 +34,65 @@ const Home = () => {
 export default Home;
 ```
 
+### 📄 `app/details.tsx`
+
+```tsx
+import { View, Text } from 'react-native'
+import React from 'react'
+import { Link } from 'expo-router';
+
+const Details = () => {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 20, marginTop: 20, marginBottom: 20 }}>Details</Text>
+      <Link href="/">Go to Home</Link>
+    </View>
+  )
+}
+
+export default Details
+```
+
+---
+
+## 🧭 Step 2: Add Stack Navigation
+
+Create a layout file to define your navigation stack.
+
+### 📂 `app/_layout.tsx`
+
+```tsx
+import { Stack } from 'expo-router';
+
+export default function RootLayout() {
+  return (
+    <Stack
+      screenOptions={{
+        headerStyle: { backgroundColor: '#6200ee' },
+        headerTintColor: '#fff',
+        headerTitleStyle: { fontWeight: 'bold' },
+      }}
+    >
+      <Stack.Screen name="index" options={{ title: 'Home' }} />
+      <Stack.Screen name="details" options={{ title: 'Details' }} />
+    </Stack>
+  );
+}
+```
+
+---
+
+## Result
+
+- `/` → renders `index.tsx`
+- `/details` → renders `details.tsx`
+- Navigation is handled via `<Link href="/details" />`
+- Stack headers are styled using `screenOptions`
+
 ---
 
 ## Join the Community
 
-Be part of the Expo community of developers building universal apps:
-
-* [Expo on GitHub](https://github.com/expo/expo) – Contribute to the open-source platform.
-* [Expo Discord Community](https://chat.expo.dev) – Chat with developers and ask questions.
+- 📚 [Expo Router Docs](https://expo.github.io/router/docs)  
+- 🛠 [Expo GitHub](https://github.com/expo/expo)  
+- 💬 [Expo Discord](https://chat.expo.dev)
