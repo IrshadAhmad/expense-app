@@ -1,73 +1,91 @@
-# Welcome to Your Expo App 👋
+# Update the Application to Use Navigation
 
-This is an [Expo](https://expo.dev) project created with:
+Let’s update the application to explore more about **routing in Expo**.
+
+---
+
+## Setting Up Expo Router (File-Based Routing)
+
+### 1. Install Required Packages
 
 ```bash
-npx create-expo-app mobile-app --template blank-typescript
+npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
 ```
 
----
+### 2. Update `package.json`
 
-## Install Required VS Code Extensions
-
-Before moving forward, install the following VS Code extensions:
-
-1. **Expo Tools** – Provides IntelliSense for configuration files and debugging capabilities.
-2. **ES7+ React/Redux/React-Native Snippets** – Offers JavaScript and React/Redux snippets in ES7+ with Babel plugin support.
-
----
-
-## Update Project Configuration
-
-### 1. Update `package.json`
-
-Change the app name:
+Set the entry point:
 
 ```json
-"name": "expense-app"
+"main": "expo-router/entry"
 ```
 
-### 2. Update `app.json`
+### 3. Update `app.json`
 
-Modify the configuration as follows:
+Add a custom scheme:
 
 ```json
-{
-  "expo": {
-    "name": "ExpenseApp",
-    "slug": "expenseapp",
-    "scheme": "expenseapp"
-  }
+"scheme": "your-app-scheme"
+```
+
+### 4. Install Web Support
+
+```bash
+npx expo install react-native-web react-dom
+```
+
+### 5. Update `app.json` for Web
+
+```json
+"web": {
+  "bundler": "metro"
 }
 ```
 
-### 3. Run the Application
+### 6. Configure Babel
 
-Start your Expo app with:
+Create `babel.config.js`:
 
-```bash
-npx expo start
+```js
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: ['babel-preset-expo'],
+  };
+};
 ```
 
----
+Install the required Babel packages:
 
-## Run on Mobile Devices
+```bash
+npm install -D babel-preset-expo
+```
 
-* **Android**
+### 7. Set Up Entry File
 
-  1. Install the [Expo Go](https://play.google.com/store/apps/details?id=host.exp.exponent) app from Google Play.
-  2. Run `npx expo start` and scan the QR code using Expo Go.
+* Remove `App.tsx` from the root folder.
+* Create a new `index.tsx` file with the following content:
 
-* **iOS**
+```tsx
+import { View, Text } from 'react-native';
+import React from 'react';
 
-  1. Install the [Expo Go](https://apps.apple.com/app/expo-go/id982107779) app from the App Store.
-  2. Run `npx expo start` and scan the QR code with your iPhone’s camera to open in Expo Go.
+const Home = () => {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 20 }}>Home</Text>
+    </View>
+  );
+};
+
+export default Home;
+```
 
 ---
 
 ## Join the Community
 
-Join our community of developers creating universal apps:
+Be part of the Expo community of developers building universal apps:
 
-* [Expo on GitHub](https://github.com/expo/expo) – View our open-source platform and contribute.
-* [Discord Community](https://chat.expo.dev) – Chat with Expo users and ask questions.
+* [Expo on GitHub](https://github.com/expo/expo) – Contribute to the open-source platform.
+* [Expo Discord Community](https://chat.expo.dev) – Chat with developers and ask questions.
