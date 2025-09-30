@@ -1,14 +1,8 @@
-import { View, Text } from 'react-native';
-import React from 'react';
-import { Link } from 'expo-router';
+import React from 'react'
+import { Redirect } from 'expo-router';
 
-const Home = () => {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ fontSize: 20, marginTop: 20, marginBottom: 20 }}>Home</Text>
-      <Link href="/details">Go to Details</Link>
-    </View>
-  );
-};
+const index = () => {
+  return <Redirect href="/(tabs)/dashboard" />; 
+}
 
-export default Home;
+export default index
